@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const JobCard = () => {
   return (
-    <div className="w-327  md:w-339 xl:w-351 mx-auto px-5 pb-6 rounded-md  bg-white">
+    <div className="w-327  md:w-339 xl:w-351 mx-auto px-5 pb-6 rounded-md  bg-white my-6">
       <div
         className="w-14 h-14 flex justify-center items-center rounded-xl relative top-[-22px] "
         style={{ background: "hsl(36, 87%, 49%)" }}

@@ -11,3 +11,11 @@
 body {
   background-color: #f4f6f8;
 }
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(327px, 1fr));
+  margin: 0 auto;
+  gap: 20px;
+  overflow: hidden;
+}
