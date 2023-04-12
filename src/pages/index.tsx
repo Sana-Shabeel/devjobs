@@ -1,12 +1,13 @@
 import Image from "next/image";
-import { Inter } from "next/font/google";
+import { Kumbh_Sans } from "next/font/google";
+import JobCard from "@/components/JobCard";
 
-const inter = Inter({ subsets: ["latin"] });
+const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-6xl font-bold text-center">Hello World!</h1>
+    <main className={`${kumbh.className} py-24`}>
+      <JobCard />
     </main>
   );
 }
