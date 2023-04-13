@@ -9,9 +9,11 @@ const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main className={`${kumbh.className} py-6`}>
+    <main
+      className={`${kumbh.className} py-6 md:w-689 lg:w-1110 overflow-hidden  mx-auto`}
+    >
       <FilterTab />
-      <section className="container md:w-689 lg:w-1110 ">
+      <section className="container">
         {data.map((job) => (
           <JobCard key={job.id} job={job} />
         ))}
