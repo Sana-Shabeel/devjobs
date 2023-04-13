@@ -28,7 +28,7 @@ const JobCard = ({ job }: JobCardProps) => {
           <span className="text-gray ">{job.contract}</span>
         </div>
         <h1 className="text-xl font-bold">{job.position}</h1>
-        <span className="block text-gray mb-8">{job.company}</span>
+        <span className="block text-gray mb-8 mt-2">{job.company}</span>
         <h3 className="text-violet font-bold ">{job.location}</h3>
       </div>
     </div>
