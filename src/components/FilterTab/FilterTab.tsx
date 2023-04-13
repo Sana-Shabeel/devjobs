@@ -1,20 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Filter from "./Filter";
+import RadioInput from "./RadioInput";
 
 const FilterTab = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const handleInputChange = (value: string) => {
+    setSelectedValue(value);
+  };
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+
+    const handleResize = (event: MediaQueryListEvent) => {
+      setIsMobile(event.matches);
+    };
+
+    // Check initial window size and add listener for changes
+    setIsMobile(mediaQuery.matches);
+    mediaQuery.addEventListener("change", handleResize);
+
+    // Cleanup listener on unmount
+    return () => {
+      mediaQuery.removeEventListener("change", handleResize);
+    };
+  }, []);
+
   return (
-    <form className="w-327 h-[5rem] bg-white mx-auto my-6 rounded-md flex items-center justify-between md:w-689 px-4">
+    <form className="mx-auto my-6 flex h-[5rem] w-327 items-center rounded-md bg-white md:w-auto lg:justify-start">
       <Filter
         icon="/assets/desktop/icon-search-violet.svg"
-        placeholder="Filter by title..."
+        placeholder={
+          isMobile
+            ? "Filter by title"
+            : "Filter by title, companies, expertise."
+        }
+        width="lg:basis-[45%] ml-8"
       />
-      <div className="w-[2px] h-[5rem] bg-lightGray DIVIDER" />
+      <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray md:block " />
       <Filter
         icon="/assets/desktop/icon-location.svg"
         placeholder="Filter by location..."
+        width="lg:basis-[20%]"
+        hidden="hidden"
       />
-      <div className="w-[2px] h-[5rem] bg-lightGray DIVIDER " />
+      <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray md:block " />
 
       <div className="mx-4 cursor-pointer md:hidden">
         <Image
@@ -26,12 +59,14 @@ const FilterTab = () => {
         />
       </div>
 
-      <div className="flex items-center gap-3 ">
-        <div className="w-6 h-6 bg-lightGray  grid place-items-center rounded"></div>
-        <span>Full time</span>
-      </div>
+      <RadioInput
+        label="Full Time"
+        value="option1"
+        checked={selectedValue === "option1"}
+        onChange={handleInputChange}
+      />
 
-      <button className="w-12 h-12 md:w-20  bg-violet  grid place-items-center rounded ">
+      <button className="mr-6 grid h-12 w-12 place-items-center rounded bg-violet md:w-20 lg:w-32">
         <Image
           src="/assets/desktop/icon-search-white.svg"
           className="md:hidden "
@@ -39,7 +74,7 @@ const FilterTab = () => {
           height={20}
           alt="search icon"
         />
-        <span className="hidden md:inline text-center text-white">Search</span>
+        <span className="hidden text-center text-white md:inline">Search</span>
       </button>
     </form>
   );
