@@ -4,14 +4,18 @@ import Image from "next/image";
 interface FilterProps {
   icon: string;
   placeholder: string;
+  width?: string;
+  hidden?: string;
 }
 
-const Filter = ({ icon, placeholder }: FilterProps) => {
+const Filter = ({ icon, placeholder, width, hidden }: FilterProps) => {
   return (
-    <div className="flex items-center md:auto">
+    <div
+      className={`${width} ${hidden} md:auto items-center md:flex md:basis-44 lg:m-8 `}
+    >
       <Image
         src={icon}
-        className="hidden md:inline mt-1 mr-2"
+        className="mr-2 mt-1 hidden md:inline"
         width={18}
         height={18}
         alt="search icon"
@@ -20,7 +24,7 @@ const Filter = ({ icon, placeholder }: FilterProps) => {
       <input
         type="text"
         placeholder={placeholder}
-        className="w-auto rounded-md   hover:outline-0"
+        className="ml-2 min-w-full overflow-hidden rounded-md outline-0 hover:outline-0"
       />
     </div>
   );
