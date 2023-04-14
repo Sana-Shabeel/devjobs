@@ -5,7 +5,7 @@ interface Props {
   label: string;
   value: string;
   checked: boolean;
-  onChange: (value: string) => void;
+  onChange: (value: boolean) => void;
 }
 
 function RadioInput({ label, value, checked, onChange }: Props) {
@@ -13,7 +13,7 @@ function RadioInput({ label, value, checked, onChange }: Props) {
 
   const handleClick = () => {
     setIsChecked(!isChecked);
-    onChange(value);
+    onChange(!isChecked);
   };
 
   return (
