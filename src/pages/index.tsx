@@ -11,7 +11,7 @@ const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 export default function Home() {
   return (
     <main
-      className={`${kumbh.className} mx-auto overflow-hidden py-6 md:w-689  lg:w-1110`}
+      className={`${kumbh.className} mx-auto overflow-hidden bg-lightGray py-6 md:w-689  lg:w-1110`}
     >
       <FilterTab />
 

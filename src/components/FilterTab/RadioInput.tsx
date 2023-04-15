@@ -4,11 +4,12 @@ import Image from "next/image";
 interface Props {
   label: string;
   value: string;
+  hidden: string;
   checked: boolean;
   onChange: (value: boolean) => void;
 }
 
-function RadioInput({ label, value, checked, onChange }: Props) {
+function RadioInput({ label, value, checked, onChange, hidden }: Props) {
   const [isChecked, setIsChecked] = useState(checked);
 
   const handleClick = () => {
@@ -18,7 +19,7 @@ function RadioInput({ label, value, checked, onChange }: Props) {
 
   return (
     <div
-      className="hidden items-center gap-3 md:flex md:basis-40 lg:ml-6 lg:basis-[20%]"
+      className={`${hidden} flex basis-40 items-center gap-3 lg:ml-6 lg:basis-[20%]`}
       onClick={handleClick}
     >
       <div

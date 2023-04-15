@@ -6,10 +6,10 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
-} from "@chakra-ui/react";
+} from "@chakra-ui/modal";
 import RadioInput from "../FilterTab/RadioInput";
 import Filter from "../FilterTab/Filter";
+import Image from "next/image";
 
 interface Props {
   isOpen: boolean;
@@ -31,17 +31,26 @@ function FilterModal({
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Filter
-              icon="/assets/desktop/icon-location.svg"
-              placeholder="Filter by location..."
-              width="lg:basis-[20%]"
-              hidden="hidden"
-              name="location"
-              onChange={handleInputChange}
-            />
+          <ModalBody pt="2rem">
+            <div className={` auto flex items-center  `}>
+              <Image
+                src="/assets/desktop/icon-location.svg"
+                className="mr-2 mt-1  inline"
+                width={18}
+                height={18}
+                alt="location icon"
+              />
+
+              <input
+                type="text"
+                name="location"
+                placeholder="Filter by location..."
+                onChange={(e) =>
+                  handleInputChange({ [e.target.name]: e.target.value })
+                }
+                className="ml-2 min-w-full overflow-hidden rounded-md outline-0 hover:outline-0"
+              />
+            </div>
             <RadioInput
               label="Full Time"
               value="Fulltime"
@@ -54,7 +63,6 @@ function FilterModal({
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button variant="ghost">Secondary Action</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

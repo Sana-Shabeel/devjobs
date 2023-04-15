@@ -2,12 +2,9 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Filter from "./Filter";
 import RadioInput from "./RadioInput";
-import { useDisclosure } from "@chakra-ui/react";
 import FilterModal from "../Modal/FilterModal";
 
 const FilterTab = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   const [isMobile, setIsMobile] = useState(false);
 
   const [selectedValue, setSelectedValue] = useState(false);
@@ -54,13 +51,6 @@ const FilterTab = () => {
 
   return (
     <>
-      <FilterModal
-        isOpen={isOpen}
-        onClose={onClose}
-        handleRadioChange={handleRadioChange}
-        selectedValue={selectedValue}
-        handleInputChange={handleInputChange}
-      />
       <form
         onSubmit={onSubmit}
         className="mx-auto my-6 flex h-[5rem] w-327 items-center rounded-md bg-white md:w-auto lg:justify-start"
@@ -86,7 +76,7 @@ const FilterTab = () => {
           onChange={handleInputChange}
         />
         <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray md:block " />
-        <div onClick={onOpen} className="mx-4 cursor-pointer md:hidden">
+        <div onClick={true} className="mx-4 cursor-pointer md:hidden">
           <Image
             src="/assets/mobile/icon-filter.svg"
             className=""
@@ -100,6 +90,7 @@ const FilterTab = () => {
           value="Fulltime"
           checked={selectedValue}
           onChange={handleRadioChange}
+          hidden="sm:hidden"
         />
         <button
           type="submit"
