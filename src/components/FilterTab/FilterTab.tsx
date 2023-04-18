@@ -14,6 +14,8 @@ const FilterTab = () => {
     location: "",
   });
 
+  const [showModal, setShowModal] = useState(false);
+
   const handleRadioChange = (value: boolean) => {
     setSelectedValue(value);
   };
@@ -51,6 +53,14 @@ const FilterTab = () => {
 
   return (
     <>
+      {showModal && (
+        <FilterModal
+          handleInputChange={handleInputChange}
+          selectedValue={selectedValue}
+          handleRadioChange={handleRadioChange}
+          setShowModal={setShowModal}
+        />
+      )}
       <form
         onSubmit={onSubmit}
         className="mx-auto my-6 flex h-[5rem] w-327 items-center rounded-md bg-white md:w-auto lg:justify-start"
@@ -65,6 +75,7 @@ const FilterTab = () => {
           width="lg:basis-[45%] ml-8"
           name="title"
           onChange={handleInputChange}
+          showIcon={false}
         />
         <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray md:block " />
         <Filter
@@ -72,14 +83,17 @@ const FilterTab = () => {
           placeholder="Filter by location..."
           width="lg:basis-[20%]"
           hidden="hidden"
+          showIcon={false}
           name="location"
           onChange={handleInputChange}
         />
         <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray md:block " />
-        <div onClick={true} className="mx-4 cursor-pointer md:hidden">
+        <div
+          onClick={() => setShowModal(true)}
+          className="mx-4 cursor-pointer md:hidden"
+        >
           <Image
             src="/assets/mobile/icon-filter.svg"
-            className=""
             width={20}
             height={20}
             alt="search icon"
@@ -90,7 +104,7 @@ const FilterTab = () => {
           value="Fulltime"
           checked={selectedValue}
           onChange={handleRadioChange}
-          hidden="sm:hidden"
+          hidden="hidden"
         />
         <button
           type="submit"

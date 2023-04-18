@@ -6,6 +6,7 @@ interface FilterProps {
   width?: string;
   hidden?: string;
   name: string;
+  showIcon: boolean;
   onChange: (value: {}) => void;
 }
 
@@ -15,17 +16,20 @@ const Filter = ({
   width,
   hidden,
   name,
+  showIcon,
   onChange,
 }: FilterProps) => {
   return (
     <div
-      className={`${width} ${hidden} md:auto items-center md:flex md:basis-44 lg:m-8 `}
+      className={`${width} ${hidden} items-center md:flex md:basis-44 lg:m-8`}
     >
       <Image
         src={icon}
-        className="mr-2 mt-1 hidden md:inline"
-        width={18}
-        height={18}
+        className={`${
+          showIcon === true ? "block" : "hidden"
+        } mr-2 mt-1 md:inline `}
+        width={20}
+        height={20}
         alt="search icon"
       />
 

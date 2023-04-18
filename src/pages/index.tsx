@@ -15,11 +15,11 @@ export default function Home() {
     >
       <FilterTab />
 
-      <section className="container">
+      {/* <section className="container">
         {data.map((job) => (
           <JobCard key={job.id} job={job} />
         ))}
-      </section>
+      </section> */}
     </main>
   );
 }
