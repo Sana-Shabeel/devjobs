@@ -1,71 +1,68 @@
-import { useState } from "react";
-import RadioInput from "../FilterTab/RadioInput";
-import Filter from "../FilterTab/Filter";
-import Image from "next/image";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from "@chakra-ui/modal";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
 
-interface FilterModalProps {
+interface Props {
   isOpen: boolean;
-  selectedValue: boolean;
-  onClose: () => void;
-  handleInputChange: (value: {}) => void;
-  handleRadioChange: (value: boolean) => void;
+  closeModal: () => void;
 }
 
-function FilterModal({
-  isOpen,
-  onClose,
-  handleInputChange,
-  selectedValue,
-  handleRadioChange,
-}: FilterModalProps) {
+export default function FilterModal({ isOpen, closeModal }: Props) {
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay>
-          <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Filter
-                icon="/assets/desktop/icon-location.svg"
-                placeholder="Filter by location..."
-                width="max-w-[15rem] h-20"
-                hidden="flex"
-                name="location"
-                showIcon={true}
-                onChange={handleInputChange}
-              />
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
 
-              <RadioInput
-                label="Full Time"
-                value="Fulltime"
-                checked={selectedValue}
-                onChange={handleRadioChange}
-                hidden="flex h-20"
-              />
-            </ModalBody>
-            <ModalFooter>
-              <button
-                className="mx-auto mb-4 w-4/5 rounded bg-blue-500 py-3 font-bold text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-blue-600"
-                type="button"
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
-                Search
-              </button>
-            </ModalFooter>
-          </ModalContent>
-        </ModalOverlay>
-      </Modal>
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-gray-900 text-lg font-medium leading-6"
+                  >
+                    Payment successful
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-gray-500 text-sm">
+                      Your payment has been successfully submitted. We’ve sent
+                      you an email with all of the details of your order.
+                    </p>
+                  </div>
+
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeModal}
+                    >
+                      Got it, thanks!
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </>
   );
 }
-
-export default FilterModal;
