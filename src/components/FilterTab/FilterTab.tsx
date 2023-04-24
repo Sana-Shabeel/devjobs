@@ -2,28 +2,16 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Filter from "./Filter";
 import RadioInput from "./RadioInput";
-import TestModal from "../Modal/TestModal";
 import FilterModal from "../Modal/FilterModal";
-
-const placeholder = {
-  title: {
-    sm: "Filter by title",
-    lg: "Filter by title, companies, expertise...",
-  },
-  location: {
-    sm: "Filter by location…",
-    lg: "Filter by location…",
-  },
-};
 
 const FilterTab = () => {
   const [selectedValue, setSelectedValue] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const [inputValue, setInputValue] = useState({
     title: "",
     location: "",
   });
-
   const [showModal, setShowModal] = useState(false);
 
   const handleRadioChange = (value: boolean) => {
@@ -44,12 +32,33 @@ const FilterTab = () => {
     });
   };
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+
+    const handleResize = (event: MediaQueryListEvent) => {
+      setIsMobile(event.matches);
+    };
+
+    // Check initial window size and add listener for changes
+    setIsMobile(mediaQuery.matches);
+    mediaQuery.addEventListener("change", handleResize);
+
+    // Cleanup listener on unmount
+    return () => {
+      mediaQuery.removeEventListener("change", handleResize);
+    };
+  }, []);
+
   return (
     <>
       {showModal && (
         <FilterModal
           isOpen={showModal}
           closeModal={() => setShowModal(false)}
+          handleInputChange={handleInputChange}
+          selectedValue={selectedValue}
+          handleRadioChange={handleRadioChange}
+          onSubmit={onSubmit}
         />
       )}
 
@@ -59,8 +68,12 @@ const FilterTab = () => {
       >
         <Filter
           icon="/assets/desktop/icon-search-violet.svg"
-          placeholder={placeholder.title}
-          width="lg:basis-[45%] ml-8"
+          placeholder={
+            isMobile
+              ? "Filter by title"
+              : "Filter by title, companies, expertise..."
+          }
+          width="w-[60%] lg:basis-[45%] ml-4"
           name="title"
           onChange={handleInputChange}
           showIcon={false}
@@ -68,7 +81,7 @@ const FilterTab = () => {
         <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray md:block " />
         <Filter
           icon="/assets/desktop/icon-location.svg"
-          placeholder={placeholder.location}
+          placeholder="Filter by location…"
           width="lg:basis-[20%]"
           hidden="hidden"
           showIcon={false}
@@ -78,7 +91,7 @@ const FilterTab = () => {
         <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray md:block " />
         <div
           onClick={() => setShowModal(true)}
-          className="mx-4 cursor-pointer md:hidden"
+          className="mx-3 w-28 cursor-pointer overflow-hidden md:hidden"
         >
           <Image
             src="/assets/mobile/icon-filter.svg"
@@ -88,7 +101,7 @@ const FilterTab = () => {
           />
         </div>
         <RadioInput
-          label="Full Time"
+          label={isMobile ? "Full Time" : "Full Time Only"}
           value="Fulltime"
           checked={selectedValue}
           onChange={handleRadioChange}
@@ -97,7 +110,7 @@ const FilterTab = () => {
         <button
           type="submit"
           onClick={onSubmit}
-          className="mr-2 grid h-12 w-12 place-items-center rounded bg-violet md:mr-4 md:w-20 lg:w-32"
+          className="mr-2 grid h-12 w-full place-items-center rounded bg-violet md:mr-4 md:w-20 lg:w-32"
         >
           <Image
             src="/assets/desktop/icon-search-white.svg"
