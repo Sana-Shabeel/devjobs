@@ -2,31 +2,39 @@ import { useState } from "react";
 import RadioInput from "../FilterTab/RadioInput";
 import Filter from "../FilterTab/Filter";
 import Image from "next/image";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/modal";
 
 interface FilterModalProps {
+  isOpen: boolean;
   selectedValue: boolean;
+  onClose: () => void;
   handleInputChange: (value: {}) => void;
   handleRadioChange: (value: boolean) => void;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function FilterModal({
-  setShowModal,
+  isOpen,
+  onClose,
   handleInputChange,
   selectedValue,
   handleRadioChange,
 }: FilterModalProps) {
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
-        <div
-          className="relative mx-4
-         my-6 w-auto max-w-3xl"
-        >
-          {/*  content  */}
-          <div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
-            {/*    body    */}
-            <div className="relative flex-auto  px-3">
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay>
+          <ModalContent>
+            <ModalHeader>Modal Title</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
               <Filter
                 icon="/assets/desktop/icon-location.svg"
                 placeholder="Filter by location..."
@@ -36,7 +44,6 @@ function FilterModal({
                 showIcon={true}
                 onChange={handleInputChange}
               />
-              <div className="DIVIDER mx-3 hidden h-[5rem] w-[10px] bg-lightGray md:block " />
 
               <RadioInput
                 label="Full Time"
@@ -45,29 +52,18 @@ function FilterModal({
                 onChange={handleRadioChange}
                 hidden="flex h-20"
               />
-            </div>
-
-            {/*footer*/}
-            <div className="flex items-center justify-end rounded-b border-t border-solid border-slate-200 p-6">
+            </ModalBody>
+            <ModalFooter>
               <button
-                className="background-transparent mb-1 mr-1 px-6 py-2 text-sm font-bold uppercase text-red-500 outline-none transition-all duration-150 ease-linear focus:outline-none"
+                className="mx-auto mb-4 w-4/5 rounded bg-blue-500 py-3 font-bold text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-blue-600"
                 type="button"
-                onClick={() => setShowModal(false)}
               >
-                Close
+                Search
               </button>
-              <button
-                className="mb-1 mr-1 rounded bg-emerald-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-emerald-600"
-                type="button"
-                onClick={() => setShowModal(false)}
-              >
-                Save Changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
+            </ModalFooter>
+          </ModalContent>
+        </ModalOverlay>
+      </Modal>
     </>
   );
 }
