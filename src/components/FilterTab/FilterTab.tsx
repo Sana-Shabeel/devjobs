@@ -2,14 +2,21 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Filter from "./Filter";
 import RadioInput from "./RadioInput";
-import FilterModal from "../Modal/FilterModal";
 import TestModal from "../Modal/TestModal";
-import { useDisclosure } from "@chakra-ui/react";
+import FilterModal from "../Modal/FilterModal";
+
+const placeholder = {
+  title: {
+    sm: "Filter by title",
+    lg: "Filter by title, companies, expertise...",
+  },
+  location: {
+    sm: "Filter by location…",
+    lg: "Filter by location…",
+  },
+};
 
 const FilterTab = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   const [selectedValue, setSelectedValue] = useState(false);
 
   const [inputValue, setInputValue] = useState({
@@ -37,46 +44,22 @@ const FilterTab = () => {
     });
   };
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 768px)");
-
-    const handleResize = (event: MediaQueryListEvent) => {
-      setIsMobile(event.matches);
-    };
-
-    // Check initial window size and add listener for changes
-    setIsMobile(mediaQuery.matches);
-    mediaQuery.addEventListener("change", handleResize);
-
-    // Cleanup listener on unmount
-    return () => {
-      mediaQuery.removeEventListener("change", handleResize);
-    };
-  }, []);
-  console.log(isOpen);
-
   return (
     <>
       {showModal && (
         <FilterModal
-          handleInputChange={handleInputChange}
-          selectedValue={selectedValue}
-          handleRadioChange={handleRadioChange}
           isOpen={showModal}
-          onClose={() => setShowModal(false)}
+          closeModal={() => setShowModal(false)}
         />
       )}
+
       <form
         onSubmit={onSubmit}
-        className="mx-auto my-6 flex h-[5rem] w-327 items-center rounded-md bg-white md:w-auto lg:justify-start"
+        className="mx-auto my-6 flex h-[5rem] w-11/12 items-center justify-between rounded-md bg-white pr-3 md:w-full md:pr-0 lg:justify-start"
       >
         <Filter
           icon="/assets/desktop/icon-search-violet.svg"
-          placeholder={
-            isMobile
-              ? "Filter by title"
-              : "Filter by title, companies, expertise."
-          }
+          placeholder={placeholder.title}
           width="lg:basis-[45%] ml-8"
           name="title"
           onChange={handleInputChange}
@@ -85,7 +68,7 @@ const FilterTab = () => {
         <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray md:block " />
         <Filter
           icon="/assets/desktop/icon-location.svg"
-          placeholder="Filter by location..."
+          placeholder={placeholder.location}
           width="lg:basis-[20%]"
           hidden="hidden"
           showIcon={false}
