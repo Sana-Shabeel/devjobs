@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 interface FilterProps {
   icon: string;
-  placeholder: {
-    sm: string;
-    lg: string;
-  };
+  placeholder: string;
   width?: string;
   hidden?: string;
   name: string;
@@ -22,25 +19,6 @@ const Filter = ({
   showIcon,
   onChange,
 }: FilterProps) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 768px)");
-
-    const handleResize = (event: MediaQueryListEvent) => {
-      setIsMobile(event.matches);
-    };
-
-    // Check initial window size and add listener for changes
-    setIsMobile(mediaQuery.matches);
-    mediaQuery.addEventListener("change", handleResize);
-
-    // Cleanup listener on unmount
-    return () => {
-      mediaQuery.removeEventListener("change", handleResize);
-    };
-  }, []);
-
   return (
     <div
       className={`${width} ${hidden} items-center md:flex md:basis-44 lg:m-8`}
@@ -58,9 +36,9 @@ const Filter = ({
       <input
         type="text"
         name={name}
-        placeholder={isMobile ? placeholder.sm : placeholder.lg}
+        placeholder={placeholder}
         onChange={(e) => onChange({ [e.target.name]: e.target.value })}
-        className="ml-2 min-w-full overflow-hidden rounded-md outline-0 hover:outline-0"
+        className="overflow-hidden rounded-md pl-3 outline-0 hover:outline-0"
       />
     </div>
   );
