@@ -36,7 +36,7 @@ function RadioInput({ label, value, checked, onChange, hidden }: Props) {
           />
         )}
       </div>
-      <label>{label}</label>
+      <label className="font-bold">{label}</label>
     </div>
   );
 }

@@ -4,7 +4,6 @@ import JobCard from "@/components/JobCard";
 import data from "../../data/data.json";
 import Button from "@/components/Button";
 import FilterTab from "@/components/FilterTab/FilterTab";
-import TestModal from "@/components/Modal/TestModal";
 import MyModal from "@/components/Modal/FilterModal";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });

@@ -1,12 +1,25 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import Filter from "../FilterTab/Filter";
+import RadioInput from "../FilterTab/RadioInput";
 
 interface Props {
   isOpen: boolean;
   closeModal: () => void;
+  selectedValue: boolean;
+  handleInputChange: (value: {}) => void;
+  handleRadioChange: (value: boolean) => void;
+  onSubmit: (e: React.FormEvent) => void;
 }
 
-export default function FilterModal({ isOpen, closeModal }: Props) {
+export default function FilterModal({
+  isOpen,
+  closeModal,
+  handleInputChange,
+  selectedValue,
+  handleRadioChange,
+  onSubmit,
+}: Props) {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -34,27 +47,40 @@ export default function FilterModal({ isOpen, closeModal }: Props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-gray-900 text-lg font-medium leading-6"
-                  >
-                    Payment successful
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <p className="text-gray-500 text-sm">
-                      Your payment has been successfully submitted. We’ve sent
-                      you an email with all of the details of your order.
-                    </p>
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white py-4 text-left align-middle shadow-xl transition-all">
+                  <div className="px-6">
+                    <Filter
+                      icon="/assets/desktop/icon-location.svg"
+                      placeholder="Filter by location..."
+                      width="max-w-[15rem] h-20"
+                      hidden="flex"
+                      name="location"
+                      showIcon={true}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className="DIVIDER h-[2px] w-full bg-lightGray " />
+
+                  <div className="px-6">
+                    <RadioInput
+                      label="Full Time Only"
+                      value="Fulltime"
+                      checked={selectedValue}
+                      onChange={handleRadioChange}
+                      hidden="flex h-20"
+                    />
                   </div>
 
-                  <div className="mt-4">
+                  <div className="mt-4 grid place-items-center">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
+                      className="rounded-md border border-transparent bg-blue-500 px-28 py-3 text-center text-sm font-medium text-white  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={(e) => {
+                        closeModal();
+                        onSubmit(e);
+                      }}
                     >
-                      Got it, thanks!
+                      Search
                     </button>
                   </div>
                 </Dialog.Panel>
