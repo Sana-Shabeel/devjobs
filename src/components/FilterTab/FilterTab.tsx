@@ -3,9 +3,12 @@ import Image from "next/image";
 import Filter from "./Filter";
 import RadioInput from "./RadioInput";
 import FilterModal from "../Modal/FilterModal";
+import TestModal from "../Modal/TestModal";
+import { useDisclosure } from "@chakra-ui/react";
 
 const FilterTab = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [selectedValue, setSelectedValue] = useState(false);
 
@@ -50,6 +53,7 @@ const FilterTab = () => {
       mediaQuery.removeEventListener("change", handleResize);
     };
   }, []);
+  console.log(isOpen);
 
   return (
     <>
@@ -58,7 +62,8 @@ const FilterTab = () => {
           handleInputChange={handleInputChange}
           selectedValue={selectedValue}
           handleRadioChange={handleRadioChange}
-          setShowModal={setShowModal}
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
         />
       )}
       <form
