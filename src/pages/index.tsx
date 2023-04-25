@@ -5,21 +5,63 @@ import data from "../../data/data.json";
 import Button from "@/components/Button";
 import FilterTab from "@/components/FilterTab/FilterTab";
 import MyModal from "@/components/Modal/FilterModal";
+import { useState } from "react";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
+export interface FilterType {
+  fulltime: boolean;
+  title: string;
+  location: string;
+}
+
 export default function Home() {
+  // const [filter, setFilter] = useState<FilterType>();
+  const [jobData, setJobData] = useState(data);
+
+  // create a finction that will filter the data
+  const filterData = (filter: FilterType) => {
+    // filter the data
+    const filteredData = data.filter((job) => {
+      // check if the job is fulltime
+      if (filter.fulltime) {
+        // check if the job title matches the filter title
+        if (job.position.toLowerCase().includes(filter.title.toLowerCase())) {
+          // check if the job location matches the filter location
+          if (
+            job.location.toLowerCase().includes(filter.location.toLowerCase())
+          ) {
+            return job.contract === "Full Time";
+          }
+        }
+      } else {
+        // check if the job title matches the filter title
+        if (job.position.toLowerCase().includes(filter.title.toLowerCase())) {
+          // check if the job location matches the filter location
+          if (
+            job.location.toLowerCase().includes(filter.location.toLowerCase())
+          ) {
+            return job;
+          }
+        }
+      }
+    });
+    setJobData(filteredData);
+  };
+
+  console.log(jobData);
+
   return (
     <main
-      className={`${kumbh.className} mx-auto overflow-hidden border bg-lightGray py-6  md:w-689 lg:w-1110`}
+      className={`${kumbh.className} mx-auto overflow-hidden bg-lightGray py-6  md:w-689 lg:w-1110`}
     >
-      <FilterTab />
+      <FilterTab filterData={filterData} />
 
-      {/* <section className="container">
-        {data.map((job) => (
+      <section className="container">
+        {jobData.map((job) => (
           <JobCard key={job.id} job={job} />
         ))}
-      </section> */}
+      </section>
     </main>
   );
 }
