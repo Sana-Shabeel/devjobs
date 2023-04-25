@@ -75,7 +75,7 @@ const FilterTab = ({ filterData }: Props) => {
 
       <form
         onSubmit={onSubmit}
-        className="mx-auto my-6 flex h-[5rem] w-327 items-center justify-between rounded-md bg-white pr-3 md:w-full md:pr-0 lg:justify-start"
+        className="mx-auto mb-8 mt-[-3rem] flex h-[5rem] w-327 items-center justify-between rounded-md bg-white pr-3 md:w-689 md:pr-0 lg:w-1110 lg:justify-start"
       >
         <Filter
           icon="/assets/desktop/icon-search-violet.svg"
