@@ -3,8 +3,13 @@ import Image from "next/image";
 import Filter from "./Filter";
 import RadioInput from "./RadioInput";
 import FilterModal from "../Modal/FilterModal";
+import { FilterType } from "@/pages";
 
-const FilterTab = () => {
+interface Props {
+  filterData: (filter: FilterType) => void;
+}
+
+const FilterTab = ({ filterData }: Props) => {
   const [selectedValue, setSelectedValue] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -24,6 +29,12 @@ const FilterTab = () => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    filterData({
+      fulltime: selectedValue,
+      title: inputValue.title,
+      location: inputValue.location,
+    });
 
     console.log({
       fulltime: selectedValue,
@@ -64,7 +75,7 @@ const FilterTab = () => {
 
       <form
         onSubmit={onSubmit}
-        className="mx-auto my-6 flex h-[5rem] w-11/12 items-center justify-between rounded-md bg-white pr-3 md:w-full md:pr-0 lg:justify-start"
+        className="mx-auto my-6 flex h-[5rem] w-327 items-center justify-between rounded-md bg-white pr-3 md:w-full md:pr-0 lg:justify-start"
       >
         <Filter
           icon="/assets/desktop/icon-search-violet.svg"
