@@ -23,6 +23,11 @@ module.exports = {
         gray: "#9DAEC2",
         darkGray: "#6E8098",
       },
+      backgroundImage: {
+        "hero-pattern": "url('/assets/desktop/bg-pattern-header.svg')",
+        "hero-pattern-tablet": "url('/assets/tablet/bg-pattern-header.svg')",
+        "hero-pattern-mobile": "url('/assets/mobile/bg-pattern-header.svg')",
+      },
     },
   },
   plugins: [],
