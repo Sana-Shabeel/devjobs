@@ -75,7 +75,7 @@ const FilterTab = ({ filterData }: Props) => {
 
       <form
         onSubmit={onSubmit}
-        className="mx-auto mb-8 mt-[-3rem] flex h-[5rem] w-327 items-center justify-between rounded-md bg-white pr-3 md:w-689 md:pr-0 lg:w-1110 lg:justify-start"
+        className="mx-auto mb-8 mt-[-3rem] flex h-[5rem] w-327 items-center justify-between rounded-md bg-white pr-3 dark:bg-darkBlue md:w-689 md:pr-0 lg:justify-start xl:w-1110"
       >
         <Filter
           icon="/assets/desktop/icon-search-violet.svg"
@@ -84,22 +84,22 @@ const FilterTab = ({ filterData }: Props) => {
               ? "Filter by title"
               : "Filter by title, companies, expertise..."
           }
-          width="w-[60%] lg:basis-[45%] ml-4"
+          width="w-[60%] lg:basis-[50%] ml-4 lg:m-8"
           name="title"
           onChange={handleInputChange}
           showIcon={false}
         />
-        <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray md:block " />
+        <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray dark:bg-darkGray md:block " />
         <Filter
           icon="/assets/desktop/icon-location.svg"
           placeholder="Filter by location…"
-          width="lg:basis-[20%]"
+          width="lg:basis-[30%] lg:ml-3"
           hidden="hidden"
           showIcon={false}
           name="location"
           onChange={handleInputChange}
         />
-        <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray md:block " />
+        <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray dark:bg-darkGray md:block " />
         <div
           onClick={() => setShowModal(true)}
           className="mx-3 w-28 cursor-pointer overflow-hidden md:hidden"
