@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import JobContract from "./JobContract";
 interface JobCardProps {
   job: {
     company: string;
@@ -22,11 +23,8 @@ const JobCard = ({ job }: JobCardProps) => {
         <Image src={job.logo} width="20" height="20" alt="company logo" />
       </div>
       <div>
-        <div className="mb-3 flex items-center justify-start gap-5 text-gray ">
-          <span>{job.postedAt}</span>
-          <span className="h-1 w-1 rounded bg-gray"></span>
-          <span className="text-gray ">{job.contract}</span>
-        </div>
+        <JobContract date={job.postedAt} contract={job.contract} />
+
         <h1 className="text-xl font-bold text-inherit">{job.position}</h1>
         <span className="mb-8 mt-2 block font-light tracking-wide text-gray">
           {job.company}
