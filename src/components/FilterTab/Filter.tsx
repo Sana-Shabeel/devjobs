@@ -20,9 +20,7 @@ const Filter = ({
   onChange,
 }: FilterProps) => {
   return (
-    <div
-      className={`${width} ${hidden} items-center md:flex md:basis-44 lg:m-8`}
-    >
+    <div className={`${width} ${hidden} items-center md:flex md:basis-44 `}>
       <Image
         src={icon}
         className={`${
@@ -38,7 +36,7 @@ const Filter = ({
         name={name}
         placeholder={placeholder}
         onChange={(e) => onChange({ [e.target.name]: e.target.value })}
-        className="overflow-hidden rounded-md pl-3 outline-0 hover:outline-0"
+        className="overflow-hidden rounded-md bg-inherit pl-3 outline-0 hover:outline-0 md:w-full"
       />
     </div>
   );
