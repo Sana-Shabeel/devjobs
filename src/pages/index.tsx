@@ -57,7 +57,7 @@ export default function Home() {
 
       <FilterTab filterData={filterData} />
 
-      <div className="mx-auto overflow-hidden bg-lightGray md:w-689 lg:w-1110">
+      <div className="mx-auto overflow-hidden md:w-689 xl:w-1110 ">
         <section className="container">
           {jobData.map((job) => (
             <JobCard key={job.id} job={job} />
