@@ -24,7 +24,7 @@ function RadioInput({ label, value, checked, onChange, hidden }: Props) {
     >
       <div
         className={`grid h-6 w-6  place-items-center rounded ${
-          isChecked ? "bg-violet" : "bg-lightGray"
+          isChecked ? "bg-violet" : "bg-lightGray dark:bg-darkGray"
         }`}
       >
         {isChecked && (
