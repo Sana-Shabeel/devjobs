@@ -2,17 +2,9 @@ import React from "react";
 import Image from "next/image";
 import JobContract from "./JobContract";
 import Link from "next/link";
+import { Job } from "@/Types/job";
 interface JobCardProps {
-  job: {
-    id: number;
-    company: string;
-    logo: string;
-    logoBackground: string;
-    position: string;
-    postedAt: string;
-    contract: string;
-    location: string;
-  };
+  job: Job;
 }
 
 const JobCard = ({ job }: JobCardProps) => {
