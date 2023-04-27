@@ -19,7 +19,7 @@ function RadioInput({ label, value, checked, onChange, hidden }: Props) {
 
   return (
     <div
-      className={`${hidden} basis-40 items-center gap-3 md:flex lg:ml-6 lg:basis-[20%]`}
+      className={`${hidden} basis-40 items-center gap-3 md:flex lg:ml-6 xl:basis-[20%]`}
       onClick={handleClick}
     >
       <div
@@ -38,7 +38,7 @@ function RadioInput({ label, value, checked, onChange, hidden }: Props) {
           />
         )}
       </div>
-      <label className="cursor-pointer font-bold ">{label}</label>
+      <label className=" cursor-pointer font-bold">{label}</label>
     </div>
   );
 }
