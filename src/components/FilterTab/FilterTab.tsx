@@ -121,7 +121,7 @@ const FilterTab = ({ filterData }: Props) => {
         <button
           type="submit"
           onClick={onSubmit}
-          className="mr-2 grid h-12 w-full place-items-center rounded bg-violet md:mr-4 md:w-20 lg:w-32"
+          className="mr-2 grid h-12 w-full place-items-center rounded bg-violet hover:bg-lightViolet md:mr-4 md:w-20 lg:w-32"
         >
           <Image
             src="/assets/desktop/icon-search-white.svg"
