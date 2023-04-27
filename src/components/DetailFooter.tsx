@@ -16,7 +16,7 @@ const DetailFooter = ({ title }: Props) => {
           </p>
         </div>
         <div className="mx-auto text-center md:mx-0">
-          <button className="mb-3 mt-8 rounded-md bg-violet px-[7.5rem] py-3 font-medium tracking-wide text-white md:px-10">
+          <button className="mb-3 mt-8 rounded-md bg-violet px-[7.5rem] py-3 font-medium tracking-wide text-white hover:bg-lightViolet md:px-10">
             Apply Now
           </button>
         </div>
