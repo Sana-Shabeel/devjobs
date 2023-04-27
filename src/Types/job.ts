@@ -10,16 +10,8 @@ export interface Job {
   website: string;
   apply: string;
   description: string;
-  requirements: Requirements;
-  role: Role;
-}
-
-export interface Requirements {
-  content: string;
-  items: string[];
-}
-
-export interface Role {
-  content: string;
-  items: string[];
+  requirementContent: string;
+  requirementsItem: string[];
+  roleContent: string;
+  rolesItem: string[];
 }
