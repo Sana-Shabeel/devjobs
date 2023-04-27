@@ -89,7 +89,7 @@ const FilterTab = ({ filterData }: Props) => {
           onChange={handleInputChange}
           showIcon={false}
         />
-        <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray dark:bg-darkGray md:block " />
+        <div className="DIVIDER mx-3 hidden h-[5rem] w-[1px] bg-lightGray dark:bg-darkGray md:block" />
         <Filter
           icon="/assets/desktop/icon-location.svg"
           placeholder="Filter by location…"
