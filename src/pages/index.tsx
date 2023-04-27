@@ -49,15 +49,13 @@ export default function Home() {
     setJobData(filteredData);
   };
 
-  console.log(jobData);
-
   return (
     <main className={`${kumbh.className} `}>
       <Header />
 
       <FilterTab filterData={filterData} />
 
-      <div className="mx-auto overflow-hidden md:w-689 xl:w-1110 ">
+      <div className="mx-auto mt-20 overflow-hidden md:w-689 xl:w-1110">
         <section className="container">
           {jobData.map((job) => (
             <JobCard key={job.id} job={job} />

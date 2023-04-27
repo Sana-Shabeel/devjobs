@@ -15,7 +15,7 @@ export default function SwitchToggle() {
           setTheme(theme === "dark" ? "light" : "dark");
         }}
         className={`relative inline-flex
-          h-[24px] w-[48px] shrink-0 cursor-pointer items-center rounded-full  border-2 border-transparent bg-white transition-colors duration-200 ease-in-out focus:outline-none  focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+          h-[24px] w-[48px] shrink-0 cursor-pointer items-center rounded-full  border-2 border-transparent bg-white transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
       >
         <span className="sr-only">Use setting</span>
         <span

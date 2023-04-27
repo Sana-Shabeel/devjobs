@@ -9,8 +9,6 @@ interface Props {
 }
 
 const JobDetail = ({ job }: Props) => {
-  console.log(job);
-
   return (
     <section className="mx-auto my-8 w-327 rounded-md bg-white p-6 dark:bg-darkBlue md:w-689 md:px-8 xl:w-[730px]">
       <div className="flex flex-col md:flex-row md:justify-between">
@@ -22,7 +20,7 @@ const JobDetail = ({ job }: Props) => {
           <h3 className="font-bold text-violet">{job?.location}</h3>
         </div>
         <div className="text-center">
-          <button className="mb-3 mt-8 rounded-md bg-violet px-[5.85rem] py-3 font-medium tracking-wide text-white md:px-10">
+          <button className="mb-3 mt-8 rounded-md bg-violet px-[5.85rem] py-3 font-medium tracking-wide text-white hover:bg-lightViolet md:px-10">
             Apply Now
           </button>
         </div>
