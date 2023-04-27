@@ -1,8 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import JobContract from "./JobContract";
+import Link from "next/link";
 interface JobCardProps {
   job: {
+    id: number;
     company: string;
     logo: string;
     logoBackground: string;
@@ -25,7 +27,11 @@ const JobCard = ({ job }: JobCardProps) => {
       <div>
         <JobContract date={job.postedAt} contract={job.contract} />
 
-        <h1 className="text-xl font-bold text-inherit">{job.position}</h1>
+        <Link href={`${job.company}${job.id}`}>
+          <h1 className="text-xl font-bold text-inherit hover:text-darkGray">
+            {job.position}
+          </h1>
+        </Link>
         <span className="mb-8 mt-2 block font-light tracking-wide text-gray">
           {job.company}
         </span>
