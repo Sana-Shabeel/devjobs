@@ -1,11 +1,12 @@
 import Image from "next/image";
 import { Kumbh_Sans } from "next/font/google";
 import JobCard from "@/components/JobCard";
-import data from "../../data/data.json";
 import FilterTab from "@/components/FilterTab/FilterTab";
 import MyModal from "@/components/Modal/FilterModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/Header";
+import { Job } from "@/Types/job";
+import { useQuery } from "react-query";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
@@ -16,22 +17,22 @@ export interface FilterType {
 }
 
 export default function Home() {
-  const [fetchedJobs, setFetchedJobs] = useState();
-  const [jobData, setJobData] = useState(data);
+  // const [fetchedJobs, setFetchedJobs] = useState<Job[]>();
+  const [jobData, setJobData] = useState<Job[]>();
 
-  const fetchJobs = async () => {
-    const res = await fetch("/api/getJobs");
+  const { isLoading, error, data } = useQuery("jobs", () =>
+    fetch("/api/getJobs").then((res) => res.json())
+  );
 
-    const newJobs = await res.json();
-    setFetchedJobs(newJobs);
-  };
+  useEffect(() => {
+    if (data) {
+      setJobData(data);
+    }
+  }, [data]);
 
-  console.log(fetchedJobs);
-
-  // create a finction that will filter the data
   const filterData = (filter: FilterType) => {
     // filter the data
-    const filteredData = data.filter((job) => {
+    const filteredData = data.filter((job: Job) => {
       // check if the job is fulltime
       if (filter.fulltime) {
         // check if the job title matches the filter title
@@ -55,8 +56,12 @@ export default function Home() {
         }
       }
     });
-    setJobData(filteredData);
+    setJobData(filteredData as Job[]);
   };
+
+  if (isLoading) return "Loading...";
+
+  console.log(jobData);
 
   return (
     <main className={`${kumbh.className} `}>
@@ -64,12 +69,9 @@ export default function Home() {
 
       <FilterTab filterData={filterData} />
 
-      <button className="bg-violet px-12 py-3 text-white" onClick={fetchJobs}>
-        Fetch
-      </button>
       <div className="mx-auto mt-20 overflow-hidden md:w-689 xl:w-1110">
         <section className="container">
-          {jobData.map((job) => (
+          {jobData?.map((job) => (
             <JobCard key={job.id} job={job} />
           ))}
         </section>
