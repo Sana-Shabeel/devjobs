@@ -16,8 +16,17 @@ export interface FilterType {
 }
 
 export default function Home() {
-  // const [filter, setFilter] = useState<FilterType>();
+  const [fetchedJobs, setFetchedJobs] = useState();
   const [jobData, setJobData] = useState(data);
+
+  const fetchJobs = async () => {
+    const res = await fetch("/api/getJobs");
+
+    const newJobs = await res.json();
+    setFetchedJobs(newJobs);
+  };
+
+  console.log(fetchedJobs);
 
   // create a finction that will filter the data
   const filterData = (filter: FilterType) => {
@@ -55,6 +64,9 @@ export default function Home() {
 
       <FilterTab filterData={filterData} />
 
+      <button className="bg-violet px-12 py-3 text-white" onClick={fetchJobs}>
+        Fetch
+      </button>
       <div className="mx-auto mt-20 overflow-hidden md:w-689 xl:w-1110">
         <section className="container">
           {jobData.map((job) => (
