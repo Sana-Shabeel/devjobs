@@ -1,6 +1,5 @@
 import React from "react";
 import JobContract from "./JobContract";
-import data from "../../data/data.json";
 import { Job } from "../Types/job";
 import JobRequirements from "./JobRequirements";
 
@@ -33,12 +32,14 @@ const JobDetail = ({ job }: Props) => {
       </div>
 
       <JobRequirements
-        job={job?.requirements}
+        content={job?.requirementContent}
+        items={job?.requirementsItem}
         title="Requirements"
         listStyle="list-disc"
       />
       <JobRequirements
-        job={job?.role}
+        content={job?.roleContent}
+        items={job?.rolesItem}
         title="What You Will Do"
         listStyle="list-decimal"
       />
