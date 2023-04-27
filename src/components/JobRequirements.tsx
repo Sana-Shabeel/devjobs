@@ -1,20 +1,20 @@
-import { Role, Requirements } from "@/Types/job";
 import React from "react";
 
 interface Props {
   title: string;
   listStyle: string;
-  job: Requirements | Role | undefined;
+  content: string | undefined;
+  items: string[] | undefined;
 }
 
-const JobRequirements = ({ job, title, listStyle }: Props) => {
+const JobRequirements = ({ items, content, title, listStyle }: Props) => {
   return (
     <div className="my-3 leading-loose">
       <h2 className="mb-4 text-xl font-bold text-inherit">{title}</h2>
-      <p className="font-light text-darkGray">{job?.content}</p>
+      <p className="font-light text-darkGray">{content}</p>
 
       <div className="mt-4">
-        {job?.items.map((item, index) => (
+        {items?.map((item, index) => (
           <div
             key={index}
             className="flex items-start  font-light text-darkGray"
