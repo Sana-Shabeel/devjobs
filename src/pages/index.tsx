@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import { Job } from "@/Types/job";
 import { useQuery } from "react-query";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
@@ -59,8 +60,6 @@ export default function Home() {
     setJobData(filteredData as Job[]);
   };
 
-  if (isLoading) return "Loading...";
-
   console.log(jobData);
 
   return (
@@ -69,13 +68,17 @@ export default function Home() {
 
       <FilterTab filterData={filterData} />
 
-      <div className="mx-auto mt-20 overflow-hidden md:w-689 xl:w-1110">
-        <section className="container">
-          {jobData?.map((job) => (
-            <JobCard key={job.id} job={job} />
-          ))}
-        </section>
-      </div>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <div className="mx-auto mt-20 overflow-hidden md:w-689 xl:w-1110">
+          <section className="container">
+            {jobData?.map((job) => (
+              <JobCard key={job.id} job={job} />
+            ))}
+          </section>
+        </div>
+      )}
     </main>
   );
 }
