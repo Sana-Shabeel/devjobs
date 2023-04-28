@@ -19,8 +19,9 @@ const Filter = ({
   showIcon,
   onChange,
 }: FilterProps) => {
+  //md:flex md:basis-44
   return (
-    <div className={`${width} ${hidden} items-center md:flex md:basis-44 `}>
+    <div className={`${width} ${hidden} items-center md:flex`}>
       <Image
         src={icon}
         className={`${
@@ -31,13 +32,15 @@ const Filter = ({
         alt="search icon"
       />
 
-      <input
-        type="text"
-        name={name}
-        placeholder={placeholder}
-        onChange={(e) => onChange({ [e.target.name]: e.target.value })}
-        className="overflow-hidden rounded-md bg-inherit pl-3 outline-0 hover:outline-0 md:w-full"
-      />
+      <div className="overflow-hidden rounded-md bg-inherit outline-0 hover:outline-0">
+        <input
+          type="text"
+          name={name}
+          placeholder={placeholder}
+          className=" outline-0 sm:w-full"
+          onChange={(e) => onChange({ [e.target.name]: e.target.value })}
+        />
+      </div>
     </div>
   );
 };
