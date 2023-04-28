@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Filter from "../FilterTab/Filter";
 import RadioInput from "../FilterTab/RadioInput";
+import Divide from "../Divide";
 
 interface Props {
   isOpen: boolean;
@@ -59,8 +60,7 @@ export default function FilterModal({
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div className="DIVIDER h-[2px] w-full bg-lightGray dark:bg-darkGray " />
-
+                  <Divide className="h-[2px] w-full" />
                   <div className="px-6">
                     <RadioInput
                       label="Full Time Only"
