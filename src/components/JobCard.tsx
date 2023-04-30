@@ -19,7 +19,7 @@ const JobCard = ({ job }: JobCardProps) => {
       <div>
         <JobContract date={job.postedAt} contract={job.contract} />
 
-        <Link href={`${job.company}${job.id}`}>
+        <Link href={`${job.id}`}>
           <h1 className="text-xl font-bold text-inherit hover:text-darkGray">
             {job.position}
           </h1>
