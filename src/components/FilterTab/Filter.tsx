@@ -37,7 +37,7 @@ const Filter = ({
           type="text"
           name={name}
           placeholder={placeholder}
-          className=" outline-0 sm:w-full"
+          className=" bg-inherit outline-0 sm:w-full"
           onChange={(e) => onChange({ [e.target.name]: e.target.value })}
         />
       </div>
