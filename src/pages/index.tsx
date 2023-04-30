@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import { Job } from "@/Types/job";
 import { useQuery } from "react-query";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useFetch } from "@/hooks/useFetch";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
@@ -21,19 +22,15 @@ export default function Home() {
   // const [fetchedJobs, setFetchedJobs] = useState<Job[]>();
   const [jobData, setJobData] = useState<Job[]>();
 
-  const { isLoading, error, data } = useQuery("jobs", () =>
-    fetch("/api/getJobs").then((res) => res.json())
-  );
+  const { isLoading, error, data } = useFetch("/api/getJobs");
 
   useEffect(() => {
-    if (data) {
-      setJobData(data);
-    }
+    setJobData(data as Job[]);
   }, [data]);
 
   const filterData = (filter: FilterType) => {
     // filter the data
-    const filteredData = data.filter((job: Job) => {
+    const filteredData = data?.filter((job: Job) => {
       // check if the job is fulltime
       if (filter.fulltime) {
         // check if the job title matches the filter title
