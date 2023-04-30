@@ -6,17 +6,16 @@ import { Kumbh_Sans } from "next/font/google";
 import { Job } from "@/Types/job";
 import DetailFooter from "@/components/DetailFooter";
 import { useQuery } from "react-query";
+import { useFetch } from "@/hooks/useFetch";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
 export default function Detail() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
-  const id = router.query.id?.slice(-1);
+  const id = parseInt(router.query.id as string);
 
-  const { isLoading, error, data } = useQuery("jobs", () =>
-    fetch("/api/getJobs").then((res) => res.json())
-  );
+  const { data } = useFetch(`/api/getJobs${id}`);
 
   const job: Job | undefined = data.find((job: Job) => job.id === Number(id));
 
@@ -26,7 +25,7 @@ export default function Detail() {
       <DetailNavbar job={job} />
 
       <JobDetail job={job} />
-      <DetailFooter title={job?.position} />
+      <DetailFooter title={job?.position} company={job?.company} />
     </main>
   );
 }
