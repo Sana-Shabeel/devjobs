@@ -25,7 +25,7 @@ const DetailNavbar = ({ job }: Props) => {
         <span className="mt-3 font-light text-darkGray">{website}</span>
       </div>
 
-      <div className="cursor-pointer rounded-md bg-[#EEEFFC] px-6 py-3 hover:bg-[#a7acf5] dark:bg-[#1F273F]">
+      <div className="cursor-pointer rounded-md bg-[#EEEFFC] px-6 py-3 hover:bg-[#a7acf5] dark:bg-[#1F273F] dark:hover:bg-[#29355a]">
         <button className="bg-inherit font-semibold text-violet ">
           Company Site
         </button>
