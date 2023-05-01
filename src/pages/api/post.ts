@@ -9,42 +9,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const {
-      company,
-      logo,
-      logoBackground,
-      position,
-      postedAt,
-      contract,
-      location,
-      website,
-      apply,
-      description,
-      requirementContent,
-      requirementsItem,
-      roleContent,
-      rolesItem,
-    } = req.body;
+    const { fullName, email, phone, city } = req.body;
     console.log("from post", req.body);
 
-    const result = await prisma.jobs.create({
-      data: {
-        company,
-        logo,
-        logoBackground,
-        position,
-        postedAt,
-        contract,
-        location,
-        website,
-        apply,
-        description,
-        requirementContent,
-        requirementsItem,
-        roleContent,
-        rolesItem,
-      },
-    });
-    res.status(201).json({ message: "Booking created", result });
+    console.log("from post", req.body);
+
+    res.status(201).json({ message: "Booking created", req: req.body });
   }
 }
