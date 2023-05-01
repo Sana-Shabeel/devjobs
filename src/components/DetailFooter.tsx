@@ -2,9 +2,10 @@ import React from "react";
 interface Props {
   title: string | undefined;
   company: string | undefined;
+  openModal: () => void;
 }
 
-const DetailFooter = ({ title, company }: Props) => {
+const DetailFooter = ({ title, company, openModal }: Props) => {
   return (
     <div className="bg-white dark:bg-darkBlue">
       <div className="mx-auto flex justify-between md:w-689 xl:w-[730px]">
@@ -15,7 +16,10 @@ const DetailFooter = ({ title, company }: Props) => {
           <p className="font-light leading-loose text-darkGray">{company}</p>
         </div>
         <div className="mx-auto text-center md:mx-0">
-          <button className="mb-3 mt-8 rounded-md bg-violet px-[7.5rem] py-3 font-medium tracking-wide text-white hover:bg-lightViolet md:px-10">
+          <button
+            onClick={openModal}
+            className="mb-3 mt-8 rounded-md bg-violet px-[7.5rem] py-3 font-medium tracking-wide text-white hover:bg-lightViolet md:px-10"
+          >
             Apply Now
           </button>
         </div>
