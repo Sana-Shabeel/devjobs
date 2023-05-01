@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 
-export const useFetch = (url: string) => {
+export const useFetch = () => {
   return useQuery({
-    // queryKey: ["job", jobId],
     queryFn: async () => {
-      const { data } = await axios.get(url);
+      const { data } = await axios.get("/api/getJobs");
       return data;
     },
   });
