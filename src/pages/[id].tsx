@@ -7,25 +7,60 @@ import { Job } from "@/Types/job";
 import DetailFooter from "@/components/DetailFooter";
 import { useQuery } from "react-query";
 import { useFetch } from "@/hooks/useFetch";
+import { useEffect, useState } from "react";
+import ApplyModal from "@/components/Modal/ApplyModal";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
 export default function Detail() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
   const id = parseInt(router.query.id as string);
+  const [isOpen, setIsOpen] = useState(false);
+  const [jobData, setJobData] = useState<Job>();
 
-  const { data } = useFetch(`/api/getJobs${id}`);
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
-  const job: Job | undefined = data.find((job: Job) => job.id === Number(id));
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  console.log(id);
+
+  const { data, isLoading } = useFetch();
+
+  useEffect(() => {
+    setJobData(data?.find((job: Job) => job.id === Number(id)) as Job);
+  }, [data, id]);
+
+  // const job: Job | undefined = data.find((job: Job) => job.id === Number(id));
 
   return (
     <main className={`${kumbh.className} `}>
+      {isOpen && (
+        <ApplyModal
+          closeModal={closeModal}
+          isOpen={isOpen}
+          position={jobData?.position}
+        />
+      )}
       <Header />
-      <DetailNavbar job={job} />
 
-      <JobDetail job={job} />
-      <DetailFooter title={job?.position} company={job?.company} />
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <DetailNavbar job={jobData} />
+          <JobDetail openModal={openModal} job={jobData} />
+          <DetailFooter
+            openModal={openModal}
+            title={jobData?.position}
+            company={jobData?.company}
+          />
+        </>
+      )}
     </main>
   );
 }

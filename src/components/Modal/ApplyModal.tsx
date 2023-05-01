@@ -1,13 +1,18 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import ApplyForm from "../ApplyForm";
+import { useMutation, useQueryClient } from "react-query";
+import axios from "axios";
 
 interface Props {
   isOpen: boolean;
   closeModal: () => void;
+  position: string;
 }
 
-export default function ApplyModal({ isOpen, closeModal }: Props) {
+export default function ApplyModal({ isOpen, closeModal, position }: Props) {
+  const [succes, setSucces] = useState(false);
+
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -38,21 +43,24 @@ export default function ApplyModal({ isOpen, closeModal }: Props) {
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-gray-900 text-xl font-bold leading-6"
+                    className={`${
+                      succes ? "text-green-500" : "text-gray-900"
+                    } text-lg font-bold leading-6 md:text-xl`}
                   >
-                    Add your contact information
+                    {succes
+                      ? "Your application was submitted"
+                      : `Apply to ${position}`}
                   </Dialog.Title>
-                  <ApplyForm />
-
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Got it, thanks!
-                    </button>
-                  </div>
+                  {succes ? (
+                    <div className="mt-6">
+                      <p className="text-gray-500 text-lg">
+                        Your application was submitted successfully. We will get
+                        back to you as soon as possible.
+                      </p>
+                    </div>
+                  ) : (
+                    <ApplyForm closeModal={closeModal} setSuccess={setSucces} />
+                  )}
                 </Dialog.Panel>
               </Transition.Child>
             </div>

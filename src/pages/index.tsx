@@ -22,7 +22,7 @@ export default function Home() {
   // const [fetchedJobs, setFetchedJobs] = useState<Job[]>();
   const [jobData, setJobData] = useState<Job[]>();
 
-  const { isLoading, error, data } = useFetch("/api/getJobs");
+  const { isLoading, error, data } = useFetch();
 
   useEffect(() => {
     setJobData(data as Job[]);
