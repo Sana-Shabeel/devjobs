@@ -8,12 +8,19 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "POST") {
-    const { fullName, email, phone, city } = req.body;
-    console.log("from post", req.body);
+  const { fullName, email, phone, city, jobId } = req.body;
 
-    console.log("from post", req.body);
+  console.log(prisma.application);
 
-    res.status(201).json({ message: "Booking created", req: req.body });
-  }
+  const result = await prisma.application.create({
+    data: {
+      fullName,
+      email,
+      phone,
+      city,
+      jobId,
+    },
+  });
+
+  res.status(201).json({ message: "Application created", result });
 }
