@@ -81,10 +81,10 @@ export default function Home() {
           </section>
         </div>
       )}
-      <div className="mt-4 grid place-items-center">
+      <div className="my-4 grid place-items-center">
         <button
           type="button"
-          className={`rounded-md border border-transparent bg-blue-500 px-12 py-3 text-center text-sm font-medium text-white  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${showMoreBtn}`}
+          className={`rounded-md border border-transparent bg-blue-500 px-12 py-3 text-center text-sm font-medium text-white hover:bg-blue-400  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${showMoreBtn}`}
           onClick={showMore}
         >
           Load More
