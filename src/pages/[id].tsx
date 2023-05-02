@@ -1,15 +1,14 @@
+import { useEffect, useState } from "react";
+import DetailFooter from "@/components/DetailFooter";
 import DetailNavbar from "@/components/DetailNavbar";
 import Header from "@/components/Header";
 import JobDetail from "@/components/JobDetail";
-import { useRouter } from "next/router";
-import { Kumbh_Sans } from "next/font/google";
-import { Job } from "@/Types/job";
-import DetailFooter from "@/components/DetailFooter";
-import { useQuery } from "react-query";
-import { useFetch } from "@/hooks/useFetch";
-import { useEffect, useState } from "react";
-import ApplyModal from "@/components/Modal/ApplyModal";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import ApplyModal from "@/components/Modal/ApplyModal";
+import { useFetch } from "@/hooks/useFetch";
+import { Kumbh_Sans } from "next/font/google";
+import { useRouter } from "next/router";
+import { Job } from "@/Types/model";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
@@ -40,16 +39,15 @@ export default function Detail() {
   return (
     <main className={`${kumbh.className} `}>
       {isOpen && (
-        <ApplyModal
-          closeModal={closeModal}
-          isOpen={isOpen}
-          position={jobData?.position}
-        />
+        <ApplyModal closeModal={closeModal} isOpen={isOpen} job={jobData} />
       )}
       <Header />
 
       {isLoading ? (
-        <LoadingSpinner />
+        <div className="flex h-screen flex-col items-center justify-center ">
+          <LoadingSpinner color="#9DAEC1" size="h-12 w-12" />
+          <p>Loading, please wait...</p>
+        </div>
       ) : (
         <>
           <DetailNavbar job={jobData} />
@@ -57,7 +55,7 @@ export default function Detail() {
           <DetailFooter
             openModal={openModal}
             title={jobData?.position}
-            company={jobData?.company}
+            applications={jobData?.applications}
           />
         </>
       )}
