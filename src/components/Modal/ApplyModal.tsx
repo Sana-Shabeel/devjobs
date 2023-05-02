@@ -1,17 +1,19 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import ApplyForm from "../ApplyForm";
-import { useMutation, useQueryClient } from "react-query";
-import axios from "axios";
+import { Job } from "@/Types/model";
 
 interface Props {
   isOpen: boolean;
   closeModal: () => void;
-  position: string;
+  job: Job | undefined;
 }
 
-export default function ApplyModal({ isOpen, closeModal, position }: Props) {
-  const [succes, setSucces] = useState(false);
+export default function ApplyModal({ isOpen, closeModal, job }: Props) {
+  const [sendApplication, setSendApplication] = useState({
+    onSuccess: false,
+    onError: false,
+  });
 
   return (
     <>
@@ -44,22 +46,48 @@ export default function ApplyModal({ isOpen, closeModal, position }: Props) {
                   <Dialog.Title
                     as="h3"
                     className={`${
-                      succes ? "text-green-500" : "text-gray-900"
-                    } text-lg font-bold leading-6 md:text-xl`}
+                      sendApplication.onSuccess
+                        ? "text-center text-2xl font-extrabold"
+                        : ""
+                    } text-gray-900 text-lg font-bold leading-6 md:text-xl`}
                   >
-                    {succes
-                      ? "Your application was submitted"
-                      : `Apply to ${position}`}
+                    {sendApplication.onSuccess
+                      ? "Thank you!"
+                      : `Apply to ${job?.position}`}
                   </Dialog.Title>
-                  {succes ? (
+                  {sendApplication.onSuccess ? (
                     <div className="mt-6">
+                      <div className="wrapper">
+                        <svg
+                          className="checkmark"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 52 52"
+                        >
+                          <circle
+                            className="checkmark__circle"
+                            cx="26"
+                            cy="26"
+                            r="25"
+                            fill="none"
+                          />
+                          <path
+                            className="checkmark__check"
+                            fill="none"
+                            d="M14.1 27.2l7.1 7.2 16.7-16.8"
+                          />
+                        </svg>
+                      </div>
                       <p className="text-gray-500 text-lg">
-                        Your application was submitted successfully. We will get
-                        back to you as soon as possible.
+                        {`Thank you for your interest in the ${job?.position} position. We will be in touch if we need further information.`}
                       </p>
                     </div>
                   ) : (
-                    <ApplyForm closeModal={closeModal} setSuccess={setSucces} />
+                    <ApplyForm
+                      closeModal={closeModal}
+                      setSendApplication={setSendApplication}
+                      sentApplication={sendApplication}
+                      jobId={job?.id}
+                    />
                   )}
                 </Dialog.Panel>
               </Transition.Child>
