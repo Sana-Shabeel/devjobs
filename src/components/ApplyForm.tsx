@@ -1,46 +1,61 @@
+import { FormValues, Job, SentApplicationProps } from "@/Types/model";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import PhoneInputWithCountry from "react-phone-number-input/react-hook-form";
 import "react-phone-number-input/style.css";
 import { useMutation, useQueryClient } from "react-query";
+import LoadingSpinner from "./LoadingSpinner";
 
-interface FormValues {
-  fullName: string;
-  email: string;
-  phone: string;
-  city: string;
-}
-
-const sendApplication = async (data: {}) => {
+const sendApplication = async (data: FormValues) => {
   const { data: response } = await axios.post("/api/post", data);
+
+  console.log(data);
+
   return response.data;
 };
 
 interface Props {
   closeModal: () => void;
-  setSuccess: (state: boolean) => void;
+  setSendApplication: Dispatch<
+    SetStateAction<{ onSuccess: boolean; onError: boolean }>
+  >;
+  sentApplication: SentApplicationProps;
+  jobId: number | undefined;
 }
 
-const ApplyForm = ({ closeModal, setSuccess }: Props) => {
+const ApplyForm = ({
+  closeModal,
+  setSendApplication,
+  sentApplication,
+  jobId,
+}: Props) => {
   const { register, handleSubmit, watch, control } = useForm();
 
-  const queryClient = useQueryClient();
-
-  // post data to server
+  // send application data to server
   const { mutate, isLoading } = useMutation(sendApplication, {
     onSuccess: (data) => {
-      console.log(data);
-      setSuccess(true);
+      setSendApplication({
+        onSuccess: true,
+        onError: false,
+      });
+    },
+    onError: (error) => {
+      setSendApplication({
+        onSuccess: false,
+        onError: true,
+      });
     },
   });
 
-  const onSubmit = (data: {}) => {
-    const employee = {
-      ...data,
+  const onSubmit = (FormValues: {}) => {
+    const applicationData = {
+      ...FormValues,
+      jobId: jobId,
     };
-    mutate(employee);
+
+    mutate(applicationData as FormValues);
   };
 
   return (
@@ -83,7 +98,7 @@ const ApplyForm = ({ closeModal, setSuccess }: Props) => {
           </label>
           <div className="mt-1">
             <input
-              {...register("email")}
+              {...register("city")}
               className="border-gray-300 block w-full rounded-md border py-2 pl-3 shadow-sm outline-none focus:border-b-4 focus:border-violet sm:text-sm"
             />
           </div>
@@ -105,11 +120,23 @@ const ApplyForm = ({ closeModal, setSuccess }: Props) => {
           </div>
         </div>
         <div className="mt-4 grid place-items-center">
+          {sentApplication.onError ? (
+            <p className="mb-2 text-sm text-red-500">
+              Something went wrong. Please try again.
+            </p>
+          ) : null}
           <button
             type="submit"
             className="rounded-md border border-transparent bg-blue-500 px-28 py-3 text-center text-sm font-medium text-white  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           >
-            Send
+            {isLoading ? (
+              <div className="flex items-center justify-center gap-2">
+                <LoadingSpinner color="#F4F6F8" size="h-4 w-4" />
+                Sending...
+              </div>
+            ) : (
+              "Send Application"
+            )}
           </button>
         </div>
       </div>
