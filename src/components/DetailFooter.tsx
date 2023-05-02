@@ -15,7 +15,9 @@ const DetailFooter = ({ title, applications, openModal }: Props) => {
             {title}
           </h2>
           <p className="font-light leading-loose text-darkGray">
-            {applications?.length} applicants have applied to this position.
+            {applications?.length === 0
+              ? "0 applicants - be the first to apply to this position."
+              : `${applications?.length} applicants`}
           </p>
         </div>
         <div className="mx-auto text-center md:mx-0">
