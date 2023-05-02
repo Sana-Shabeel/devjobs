@@ -25,6 +25,17 @@ model Jobs {
   description   String
   requirementContent String
   requirementsItem   String[]
-  roleContent String
-  rolesItem   String[]
+  roleContent        String
+  rolesItem          String[]
+  applications       Application[]
+}
+
+model Application {
+  id       Int      @id @default(autoincrement())
+  email    String   
+  fullName String     
+  city     String
+  phone    String
+  job      Jobs     @relation(fields: [jobId], references: [id])
+  jobId    Int      
 }
