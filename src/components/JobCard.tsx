@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import JobContract from "./JobContract";
 import Link from "next/link";
-import { Job } from "@/Types/job";
+import { Job } from "@/Types/model";
 interface JobCardProps {
   job: Job;
 }
@@ -14,7 +14,7 @@ const JobCard = ({ job }: JobCardProps) => {
         className="relative top-[-22px] flex h-14 w-14 items-center justify-center rounded-xl "
         style={{ background: job.logoBackground }}
       >
-        <Image src={job.logo} width="20" height="20" alt="company logo" />
+        <Image src={job.logo} width="40" height="40" alt="company logo" />
       </div>
       <div>
         <JobContract date={job.postedAt} contract={job.contract} />
