@@ -6,7 +6,11 @@ const prisma = new PrismaClient();
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     prisma.jobs
-      .findMany()
+      .findMany({
+        include: {
+          applications: true,
+        },
+      })
       .then((data) => {
         res.status(200).json(data);
       })
