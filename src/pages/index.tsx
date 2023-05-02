@@ -21,21 +21,19 @@ export interface FilterType {
 export default function Home() {
   // const [fetchedJobs, setFetchedJobs] = useState<Job[]>();
   const [jobData, setJobData] = useState<Job[]>();
-
   const { isLoading, error, data } = useFetch();
+  const [showMoreBtn, setShowMoreBtn] = useState("");
 
   useEffect(() => {
-    setJobData(data as Job[]);
+    const firstTenJobs: Job[] = data?.slice(0, 9);
+    setJobData(firstTenJobs);
   }, [data]);
 
   const filterData = (filter: FilterType) => {
-    // filter the data
     const filteredData = data?.filter((job: Job) => {
       // check if the job is fulltime
       if (filter.fulltime) {
-        // check if the job title matches the filter title
         if (job.position.toLowerCase().includes(filter.title.toLowerCase())) {
-          // check if the job location matches the filter location
           if (
             job.location.toLowerCase().includes(filter.location.toLowerCase())
           ) {
@@ -45,7 +43,6 @@ export default function Home() {
       } else {
         // check if the job title matches the filter title
         if (job.position.toLowerCase().includes(filter.title.toLowerCase())) {
-          // check if the job location matches the filter location
           if (
             job.location.toLowerCase().includes(filter.location.toLowerCase())
           ) {
@@ -58,6 +55,11 @@ export default function Home() {
   };
 
   console.log(jobData);
+
+  const showMore = () => {
+    setJobData(data as Job[]);
+    setShowMoreBtn("hidden");
+  };
 
   return (
     <main className={`${kumbh.className} `}>
@@ -79,6 +81,15 @@ export default function Home() {
           </section>
         </div>
       )}
+      <div className="mt-4 grid place-items-center">
+        <button
+          type="button"
+          className={`rounded-md border border-transparent bg-blue-500 px-12 py-3 text-center text-sm font-medium text-white  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${showMoreBtn}`}
+          onClick={showMore}
+        >
+          Load More
+        </button>
+      </div>
     </main>
   );
 }
