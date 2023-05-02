@@ -5,7 +5,7 @@ import FilterTab from "@/components/FilterTab/FilterTab";
 import MyModal from "@/components/Modal/FilterModal";
 import { useEffect, useState } from "react";
 import Header from "@/components/Header";
-import { Job } from "@/Types/job";
+import { Job } from "@/Types/model";
 import { useQuery } from "react-query";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useFetch } from "@/hooks/useFetch";
@@ -66,7 +66,10 @@ export default function Home() {
       <FilterTab filterData={filterData} />
 
       {isLoading ? (
-        <LoadingSpinner />
+        <div className="flex h-screen flex-col items-center justify-center ">
+          <LoadingSpinner color="#9DAEC1" size="h-12 w-12" />
+          <p>Loading, please wait...</p>
+        </div>
       ) : (
         <div className="mx-auto mt-20 overflow-hidden md:w-689 xl:w-1110">
           <section className="container">
