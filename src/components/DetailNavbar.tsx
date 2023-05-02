@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Job } from "@/Types/job";
+import { Job } from "@/Types/model";
 
 interface Props {
   job: Job | undefined;
@@ -17,7 +17,7 @@ const DetailNavbar = ({ job }: Props) => {
         className="mt-[-1.5rem] grid h-14 w-14 place-items-center items-center rounded-xl md:m-0 md:h-36 md:w-36 md:rounded-l-md md:rounded-r-none"
         style={{ background: job?.logoBackground }}
       >
-        <Image src={job?.logo as string} width="20" height="20" alt="logo" />
+        <Image src={job?.logo as string} width="80" height="40" alt="logo" />
       </div>
 
       <div className=" text-center md:relative md:-left-12 md:text-left xl:-left-20">
