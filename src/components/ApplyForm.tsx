@@ -1,20 +1,27 @@
-import { FormValues, Job, SentApplicationProps } from "@/Types/model";
+import { Dispatch, SetStateAction } from "react";
 import axios from "axios";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { formatPhoneNumberIntl } from "react-phone-number-input";
 import PhoneInputWithCountry from "react-phone-number-input/react-hook-form";
-import "react-phone-number-input/style.css";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import LoadingSpinner from "./LoadingSpinner";
+import { FormValues, SentApplicationProps } from "@/Types/model";
+import "react-phone-number-input/style.css";
 
 const sendApplication = async (data: FormValues) => {
   const { data: response } = await axios.post("/api/post", data);
-
   console.log(data);
 
   return response.data;
 };
+
+const schema = z.object({
+  fullName: z.string().nonempty().min(3),
+  email: z.string().email(),
+  city: z.string().nonempty(),
+  phone: z.string().nonempty(),
+});
 
 interface Props {
   closeModal: () => void;
@@ -31,7 +38,11 @@ const ApplyForm = ({
   sentApplication,
   jobId,
 }: Props) => {
-  const { register, handleSubmit, watch, control } = useForm();
+  const { register, handleSubmit, watch, control, formState } = useForm({
+    resolver: zodResolver(schema),
+  });
+
+  const { errors } = formState;
 
   // send application data to server
   const { mutate, isLoading } = useMutation(sendApplication, {
@@ -73,6 +84,11 @@ const ApplyForm = ({
               {...register("fullName")}
               className="border-gray-300 block w-full rounded-md border py-2 pl-3 shadow-sm outline-none focus:border-b-4 focus:border-violet sm:text-sm"
             />
+            {errors.fullName && (
+              <p className="mt-1 text-sm text-red-500">
+                Please enter your full name.
+              </p>
+            )}
           </div>
         </div>
         <div>
@@ -87,6 +103,11 @@ const ApplyForm = ({
               {...register("email")}
               className="border-gray-300 block w-full rounded-md border py-2 pl-3 shadow-sm outline-none focus:border-b-4 focus:border-violet sm:text-sm"
             />
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-500">
+                Please enter a valid email address.
+              </p>
+            )}
           </div>
         </div>
         <div>
@@ -101,6 +122,11 @@ const ApplyForm = ({
               {...register("city")}
               className="border-gray-300 block w-full rounded-md border py-2 pl-3 shadow-sm outline-none focus:border-b-4 focus:border-violet sm:text-sm"
             />
+            {errors.city && (
+              <p className="mt-1 text-sm text-red-500">
+                Please enter your city or state.
+              </p>
+            )}
           </div>
         </div>
         <div>
@@ -117,6 +143,11 @@ const ApplyForm = ({
               defaultCountry="US"
               rules={{ required: true }}
             />
+            {errors.phone && (
+              <p className="mt-1 text-sm text-red-500">
+                Please enter your phone number.
+              </p>
+            )}
           </div>
         </div>
         <div className="mt-4 grid place-items-center">
