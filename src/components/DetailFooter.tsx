@@ -1,11 +1,12 @@
+import { Job } from "@/Types/model";
 import React from "react";
 interface Props {
   title: string | undefined;
-  company: string | undefined;
+  applications: Job["applications"] | undefined;
   openModal: () => void;
 }
 
-const DetailFooter = ({ title, company, openModal }: Props) => {
+const DetailFooter = ({ title, applications, openModal }: Props) => {
   return (
     <div className="bg-white dark:bg-darkBlue">
       <div className="mx-auto flex justify-between md:w-689 xl:w-[730px]">
@@ -13,7 +14,9 @@ const DetailFooter = ({ title, company, openModal }: Props) => {
           <h2 className="text-xl font-bold text-inherit md:text-2xl">
             {title}
           </h2>
-          <p className="font-light leading-loose text-darkGray">{company}</p>
+          <p className="font-light leading-loose text-darkGray">
+            {applications?.length} applicants have applied to this position.
+          </p>
         </div>
         <div className="mx-auto text-center md:mx-0">
           <button
