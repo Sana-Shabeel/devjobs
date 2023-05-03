@@ -61,9 +61,6 @@ const FilterTab = ({ filterData }: Props) => {
     };
   }, []);
 
-  //md:pr-0 md:w-20 lg:w-32
-  // w-[60%] lg:basis-[50%] lg:m-8
-
   return (
     <>
       {showModal && (
