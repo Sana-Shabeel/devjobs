@@ -24,7 +24,7 @@ A jobs board that pulls data from a postgresSQL database.
 ## Links
 
 - Code: [Github](https://github.com/Sana-Shabeel/devjobs)
-- Live site: []()
+- Live site: [Vercel](https://devjobs-nu.vercel.app/)
 
 ## Screenshot
 
