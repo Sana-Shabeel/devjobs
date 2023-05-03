@@ -1,14 +1,12 @@
-import Image from "next/image";
-import { Kumbh_Sans } from "next/font/google";
-import JobCard from "@/components/JobCard";
-import FilterTab from "@/components/FilterTab/FilterTab";
-import MyModal from "@/components/Modal/FilterModal";
-import { useEffect, useState } from "react";
-import Header from "@/components/Header";
 import { Job } from "@/Types/model";
-import { useQuery } from "react-query";
+import FilterTab from "@/components/FilterTab/FilterTab";
+import Header from "@/components/Header";
+import JobCard from "@/components/JobCard";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useFetch } from "@/hooks/useFetch";
+import { Kumbh_Sans } from "next/font/google";
+import Head from "next/head";
+import { useEffect, useState } from "react";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
@@ -30,6 +28,9 @@ export default function Home() {
   }, [data]);
 
   const filterData = (filter: FilterType) => {
+    // hide the load more button when filtering
+    setShowMoreBtn("hidden");
+
     const filteredData = data?.filter((job: Job) => {
       // check if the job is fulltime
       if (filter.fulltime) {
@@ -54,42 +55,44 @@ export default function Home() {
     setJobData(filteredData as Job[]);
   };
 
-  console.log(jobData);
-
   const showMore = () => {
     setJobData(data as Job[]);
     setShowMoreBtn("hidden");
   };
 
   return (
-    <main className={`${kumbh.className} `}>
-      <Header />
+    <>
+      <Head>
+        <title>DevJobs</title>
+      </Head>
 
-      <FilterTab filterData={filterData} />
-
-      {isLoading ? (
-        <div className="flex h-screen flex-col items-center justify-center ">
-          <LoadingSpinner color="#9DAEC1" size="h-12 w-12" />
-          <p>Loading, please wait...</p>
+      <main className={`${kumbh.className} `}>
+        <Header />
+        <FilterTab filterData={filterData} />
+        {isLoading ? (
+          <div className="flex h-screen flex-col items-center justify-center ">
+            <LoadingSpinner color="#9DAEC1" size="h-12 w-12" />
+            <p>Loading, please wait...</p>
+          </div>
+        ) : (
+          <div className="mx-auto mt-20 overflow-hidden md:w-689 xl:w-1110">
+            <section className="container">
+              {jobData?.map((job) => (
+                <JobCard key={job.id} job={job} />
+              ))}
+            </section>
+          </div>
+        )}
+        <div className="my-4 grid place-items-center">
+          <button
+            type="button"
+            className={`rounded-md border border-transparent bg-blue-500 px-12 py-3 text-center text-sm font-medium text-white hover:bg-blue-400  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${showMoreBtn}`}
+            onClick={showMore}
+          >
+            Load More
+          </button>
         </div>
-      ) : (
-        <div className="mx-auto mt-20 overflow-hidden md:w-689 xl:w-1110">
-          <section className="container">
-            {jobData?.map((job) => (
-              <JobCard key={job.id} job={job} />
-            ))}
-          </section>
-        </div>
-      )}
-      <div className="my-4 grid place-items-center">
-        <button
-          type="button"
-          className={`rounded-md border border-transparent bg-blue-500 px-12 py-3 text-center text-sm font-medium text-white hover:bg-blue-400  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${showMoreBtn}`}
-          onClick={showMore}
-        >
-          Load More
-        </button>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
