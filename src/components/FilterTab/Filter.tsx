@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
 interface FilterProps {
   icon: string;
@@ -19,7 +18,6 @@ const Filter = ({
   showIcon,
   onChange,
 }: FilterProps) => {
-  //md:flex md:basis-44
   return (
     <div className={`${width} ${hidden} items-center md:flex`}>
       <Image
