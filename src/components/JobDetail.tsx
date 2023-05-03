@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import JobContract from "./JobContract";
 import { Job } from "../Types/model";
+import JobContract from "./JobContract";
 import JobRequirements from "./JobRequirements";
 
 interface Props {
