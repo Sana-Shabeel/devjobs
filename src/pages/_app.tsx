@@ -1,7 +1,7 @@
-import "@/styles/globals.css";
-import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
+import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "react-query";
+import "@/styles/globals.css";
 
 const queryClient = new QueryClient();
 
